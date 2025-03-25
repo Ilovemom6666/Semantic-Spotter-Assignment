@@ -95,7 +95,7 @@ The LangChain framework revolves around the following building blocks:
 ## 6. System Architecture
 
 ![](./Images/arch1.png) 
-[here](./https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/blob/main/Images/arch2.png)
+![](./Images/arch2.png)
 
 ## 7. Prerequisites
 

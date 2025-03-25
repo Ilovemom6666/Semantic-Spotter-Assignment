@@ -12,7 +12,8 @@ answering questions from a bunch of policy documents.
 
 ## 3. Document
 
-1. The policy documents can be found [here](./Insurance%20Policy%20Documents](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/tree/main/Insurance%20Policy%20Documents))
+1. The policy documents can be found [here](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/tree/main/Insurance%20Policy%20Documents)
+
 
 ## 4. Approach
 

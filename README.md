@@ -115,5 +115,5 @@ Applied customized chunking strategies based on document structure.
   $ git clone https://github.com/Ilovemom6666/Semantic-Spotter-Assignment.git
   ```
 - Open
-  the [notebook](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/blob/main/Semantic-Spotter-LangChain-Assignment%20(1).ipynb)
+  the [notebook](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/blob/main/Semantic-Spotter-Assignment.ipynb)
   in jupyter and run all cells.

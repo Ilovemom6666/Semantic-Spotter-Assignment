@@ -45,51 +45,55 @@ LangChain framework consists of the following:
 
 ## 5. System Layers
 
-- **Reading & Processing PDF Files:** [PyPDFDirectoryLoader](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.PyPDFDirectoryLoader.html)
+**Reading & Processing PDF Files:** [PyPDFDirectoryLoader](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.PyPDFDirectoryLoader.html)
 
 - Used PyPDFDirectoryLoader from LangChain to process PDFs.
 
 - Implemented page-wise splitting in addition to text splitting to enhance retrieval granularity.
 
 
-- **Document Chunking:**  [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/)
+**Document Chunking:**  [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/)
 
 Utilized RecursiveCharacterTextSplitter to ensure semantically meaningful text chunks.
 
 Applied customized chunking strategies based on document structure.
 
 
-- **Generating Embeddings:** 
+**Generating Embeddings:** 
 
-Instead of ChromaDB, we used cosine similarity **[cosine](https://api.python.langchain.com/en/latest/utils/langchain_community.utils.math.cosine_similarity.html) and FAISS [FAISS](https://python.langchain.com/docs/integrations/vectorstores/faiss/)** for efficient vector search.
+- Instead of ChromaDB, we used cosine similarity
+- [cosine](https://api.python.langchain.com/en/latest/utils/langchain_community.utils.math.cosine_similarity.html)
+- and FAISS [FAISS](https://python.langchain.com/docs/integrations/vectorstores/faiss/) for efficient vector search.
+- Utilized OpenAIEmbeddings from LangChain for embedding generation.
 
-Utilized OpenAIEmbeddings from LangChain for embedding generation.
-
-- **Storing Embeddings: **[Refernce]((https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.faiss.FAISS.html))**
+**Storing Embeddings:
 
 -  Switched from ChromaDB to FAISS, which offers efficient similarity search and scalable vector storage.
+-  [Refernce]((https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.faiss.FAISS.html))
 
-- **Retrievers:** [VectoreStoreRetriever](https://api.python.langchain.com/en/latest/langchain_api_reference.html#module-langchain.retrievers).
+**Retrievers:** [VectoreStoreRetriever](https://api.python.langchain.com/en/latest/langchain_api_reference.html#module-langchain.retrievers).
 
 - Implemented FAISS-based retrieval instead of ChromaDB's VectorStoreRetriever.
-Retrievers provide Easy way to combine documents with language models.A retriever is an interface that returns documents given an unstructured query.
-
+- Retrievers provide Easy way to combine documents with language models.A retriever is an interface that returns documents given an unstructured query.
 - It is more general than a vector store. A retriever does not need to be able to store documents, only to return (or retrieve) them.
-Optimized similarity search with cosine similarity to improve retrieval precision.
+- Optimized similarity search with cosine similarity to improve retrieval precision.
 
-- **Re-Ranking with a Cross Encoder:**
+**Re-Ranking with a Cross Encoder:**
 
 - Integrated HuggingFaceCrossEncoder (model BAAI/bge-reranker-base) for re-ranking retrieved results.
 - with [HuggingFaceCrossEncoder](https://python.langchain.com/api_reference/community/cross_encoders/langchain_community.cross_encoders.huggingface.HuggingFaceCrossEncoder.html)
 
-## Chains:
-
- we can create a chain that takes user input, formats it with a PromptTemplate, and then passes the formatted response to an LLM.
-Leveraged the rlm/rag-promp from LangChain Hub.Constructed a custom RAG chain for better integration with FAISS and cosine similarity,retreivalQA 
-[reference](https://python.langchain.com/docs/versions/migrating_chains/retrieval_qa/)
-- **Enhancements in Query Handling:**
+**Enhancements in Query Handling:**
 - Added new question sets to improve model performance.
 - Improved the ranking logic to ensure more relevant results appear higher.
+
+## Chains:
+
+ - we can create a chain that takes user input, formats it with a PromptTemplate, and then passes the formatted response to an LLM.
+- Leveraged the rlm/rag-promp from LangChain Hub.Constructed a custom RAG chain for better integration with FAISS and cosine similarity,retreivalQA 
+- [reference](https://python.langchain.com/docs/versions/migrating_chains/retrieval_qa/)
+
+
 
 ## 6. System Architecture
 

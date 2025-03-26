@@ -27,71 +27,63 @@ solution for creating advanced language model-powered applications.
 
 LangChain framework consists of the following:
 
-- **Components**: LangChain provides modular abstractions for the components necessary to work with language models.
-  LangChain also has collections of implementations for all these abstractions. The components are designed to be easy
-  to use, regardless of whether you are using the rest of the LangChain framework or not.
-- **Use-Case Specific Chains**: Chains can be thought of as assembling these components in particular ways in order to
-  best accomplish a particular use case. These are intended to be a higher level interface through which people can
-  easily get started with a specific use case. These chains are also designed to be customizable.
+- *Components: Modular abstractions for different components required for language models.
 
-The LangChain framework revolves around the following building blocks:
+- *Use-Case Specific Chains: Prebuilt chains tailored to specific applications.
 
-* Model I/O: Interface with language models (LLMs & Chat Models, Prompts, Output Parsers)
-* Retrieval: Interface with application-specific data (Document loaders, Document transformers, Text embedding models,
-  Vector stores, Retrievers)
-* Chains: Construct sequences/chains of LLM calls
-* Memory: Persist application state between runs of a chain
-* Agents: Let chains choose which tools to use given high-level directives
-* Callbacks: Log and stream intermediate steps of any chain
+- *Model I/O: Interfaces with language models, prompts, and output parsers.
+
+- *Retrieval: Handles application-specific data, including document loaders, transformers, embeddings, vector stores, and retrievers.
+
+- *Chains: Constructs sequences of LLM calls.
+
+- *Memory: Persists application state.
+
+- *Agents: Selects appropriate tools dynamically.
+
+- *Callbacks: Logs and streams intermediate steps.
 
 ## 5. System Layers
 
-- **Reading & Processing PDF Files:** We will be
-  using
-  LangChain [PyPDFDirectoryLoader](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.PyPDFDirectoryLoader.html)
-  to read and process the PDF files from specified directory.
+- **Reading & Processing PDF Files:** [PyPDFDirectoryLoader](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.PyPDFDirectoryLoader.html)
 
-- **Document Chunking:**  We will be
-  using LangChain [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/).
-  This text
-  splitter is the recommended one for generic text. It is parameterized by a list of
-  characters. It tries to split on them in order until the chunks are small enough. The default list
-  is ["\n\n", "\n", " ", ""]. This has the effect of trying to keep all paragraphs (and then sentences, and then words)
-  together as long as possible, as those would generically seem to be the strongest semantically related pieces of
-  text..
+- Used PyPDFDirectoryLoader from LangChain to process PDFs.
+- Implemented page-wise splitting in addition to text splitting to enhance retrieval granularity.
 
-- **Generating Embeddings:**  We will be
-  using [OpenAIEmbeddings](https://python.langchain.com/docs/integrations/text_embedding/openai/) from LangChain
-  package. The Embeddings class
-  is a class designed for interfacing with text embedding models.
-  LangChain provides support for most of the embedding model providers (OpenAI, Cohere) including sentence transformers
-  library from Hugging Face. Embeddings create a vector representation of a piece of text and supports all the
-  operations such as similarity search, text comparison, sentiment analysis etc. The base Embeddings class in LangChain
-  provides two methods: one for embedding documents and one for embedding a query.
+- **Document Chunking:**  [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/)
 
-- **Store Embeddings In ChromaDB:** In this section we will store embedding in ChromaDB. This embedding is backed by
-  LangChain [CacheBackedEmbeddings](https://python.langchain.com/api_reference/langchain/embeddings/langchain.embeddings.cache.CacheBackedEmbeddings.html)
+Utilized RecursiveCharacterTextSplitter to ensure semantically meaningful text chunks.
 
-- **Retrievers:** Retrievers provide Easy way to combine documents with language models.A retriever is an interface that
-  returns documents given an unstructured query. It is more general than a vector store. A retriever does not need to be
-  able to store documents, only to return (or retrieve) them. Retriever stores data for it to be queried by a language
-  model. It provides an interface that will return documents based on an unstructured query. Vector stores can be used
-  as the backbone of a retriever, but there are other types of retrievers as well. There are many different types of
-  retrievers, the most widely supported is
-  the [VectoreStoreRetriever](https://python.langchain.com/api_reference/core/vectorstores/langchain_core.vectorstores.base.VectorStoreRetriever.html).
+Applied customized chunking strategies based on document structure.
 
-- **Re-Ranking with a Cross Encoder:** Re-ranking the results obtained from the semantic search will sometime
-  significantly improve the relevance of the retrieved results. This is often done by passing the query paired with each
-  of the retrieved responses into a cross-encoder to score the relevance of the response w.r.t. the query. The above
-  retriever is associated
-  with [HuggingFaceCrossEncoder](https://python.langchain.com/api_reference/community/cross_encoders/langchain_community.cross_encoders.huggingface.HuggingFaceCrossEncoder.html)
-  with model BAAI/bge-reranker-base
+- **Generating Embeddings:** 
 
-- **Chains:** LangChain provides Chains that can be used to combine multiple components together to create a single,
-  coherent application. For example, we can create a chain that takes user input, formats it with a PromptTemplate, and
-  then passes the formatted response to an LLM. We can build more complex chains by combining multiple chains together,
-  or by combining chains with other components. We are using pulling prompt <b>rlm/rag-promp</b> from langchain hub to
-  use in RAG chain.
+Instead of ChromaDB, we used cosine similarity **[cosine](https://api.python.langchain.com/en/latest/utils/langchain_community.utils.math.cosine_similarity.html) and FAISS [FAISS](https://python.langchain.com/docs/integrations/vectorstores/faiss/)** for efficient vector search.
+
+Utilized OpenAIEmbeddings from LangChain for embedding generation.
+
+- **Storing Embeddings: **[Refernce]((https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.faiss.FAISS.html))**
+
+Switched from ChromaDB to FAISS, which offers efficient similarity search and scalable vector storage.
+
+- **Retrievers:** [VectoreStoreRetriever](https://api.python.langchain.com/en/latest/langchain_api_reference.html#module-langchain.retrievers).
+
+- Implemented FAISS-based retrieval instead of ChromaDB's VectorStoreRetriever.
+Retrievers provide Easy way to combine documents with language models.A retriever is an interface that returns documents given an unstructured query.
+- It is more general than a vector store. A retriever does not need to be able to store documents, only to return (or retrieve) them.
+Optimized similarity search with cosine similarity to improve retrieval precision.
+
+- **Re-Ranking with a Cross Encoder:**
+
+Integrated HuggingFaceCrossEncoder (model BAAI/bge-reranker-base) for re-ranking retrieved results. with [HuggingFaceCrossEncoder](https://python.langchain.com/api_reference/community/cross_encoders/langchain_community.cross_encoders.huggingface.HuggingFaceCrossEncoder.html)
+
+-**Chains:**
+ we can create a chain that takes user input, formats it with a PromptTemplate, and then passes the formatted response to an LLM.
+Leveraged the rlm/rag-promp from LangChain Hub.Constructed a custom RAG chain for better integration with FAISS and cosine similarity,retreivalQA 
+[reference](https://python.langchain.com/docs/versions/migrating_chains/retrieval_qa/)
+- **Enhancements in Query Handling:**
+- Added new question sets to improve model performance.
+- Improved the ranking logic to ensure more relevant results appear higher.
 
 ## 6. System Architecture
 
@@ -113,5 +105,5 @@ The LangChain framework revolves around the following building blocks:
   $ git clone https://github.com/Ilovemom6666/Semantic-Spotter-Assignment.git
   ```
 - Open
-  the [notebook](https://github.com/SanjayaKumarSahoo/semantic-spotter-project/blob/main/semantic-spotter-langchain-notebook.ipynb)
+  the [notebook](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/blob/main/Semantic-Spotter-LangChain-Assignment%20(1).ipynb)
   in jupyter and run all cells.

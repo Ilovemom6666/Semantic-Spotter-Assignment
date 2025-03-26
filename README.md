@@ -15,14 +15,14 @@ answering questions from a bunch of policy documents.
 1. The policy documents can be found [here](https://github.com/Ilovemom6666/Semantic-Spotter-Assignment/tree/main/Insurance%20Policy%20Documents)
 
 
-## 4. Approach
+## 4. Approach 
 
 LangChain is a framework that simplifies the development of LLM applications LangChain offers a suite of tools,
 components, and interfaces that simplify the construction of LLM-centric applications. LangChain enables developers to
 build applications that can generate creative and contextually relevant content LangChain provides an LLM class designed
 for interfacing with various language model providers, such as OpenAI, Cohere, and Hugging Face.
 
-LangChain's versatility and flexibility enable seamless integration with various data sources, making it a comprehensive
+- LangChain's versatility and flexibility enable seamless integration with various data sources, making it a comprehensive
 solution for creating advanced language model-powered applications.
 
 LangChain framework consists of the following:
@@ -48,13 +48,16 @@ LangChain framework consists of the following:
 - **Reading & Processing PDF Files:** [PyPDFDirectoryLoader](https://python.langchain.com/api_reference/community/document_loaders/langchain_community.document_loaders.pdf.PyPDFDirectoryLoader.html)
 
 - Used PyPDFDirectoryLoader from LangChain to process PDFs.
+
 - Implemented page-wise splitting in addition to text splitting to enhance retrieval granularity.
+
 
 - **Document Chunking:**  [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/)
 
 Utilized RecursiveCharacterTextSplitter to ensure semantically meaningful text chunks.
 
 Applied customized chunking strategies based on document structure.
+
 
 - **Generating Embeddings:** 
 
@@ -64,20 +67,23 @@ Utilized OpenAIEmbeddings from LangChain for embedding generation.
 
 - **Storing Embeddings: **[Refernce]((https://python.langchain.com/api_reference/community/vectorstores/langchain_community.vectorstores.faiss.FAISS.html))**
 
-Switched from ChromaDB to FAISS, which offers efficient similarity search and scalable vector storage.
+-  Switched from ChromaDB to FAISS, which offers efficient similarity search and scalable vector storage.
 
 - **Retrievers:** [VectoreStoreRetriever](https://api.python.langchain.com/en/latest/langchain_api_reference.html#module-langchain.retrievers).
 
 - Implemented FAISS-based retrieval instead of ChromaDB's VectorStoreRetriever.
 Retrievers provide Easy way to combine documents with language models.A retriever is an interface that returns documents given an unstructured query.
+
 - It is more general than a vector store. A retriever does not need to be able to store documents, only to return (or retrieve) them.
 Optimized similarity search with cosine similarity to improve retrieval precision.
 
 - **Re-Ranking with a Cross Encoder:**
 
-Integrated HuggingFaceCrossEncoder (model BAAI/bge-reranker-base) for re-ranking retrieved results. with [HuggingFaceCrossEncoder](https://python.langchain.com/api_reference/community/cross_encoders/langchain_community.cross_encoders.huggingface.HuggingFaceCrossEncoder.html)
+- Integrated HuggingFaceCrossEncoder (model BAAI/bge-reranker-base) for re-ranking retrieved results.
+- with [HuggingFaceCrossEncoder](https://python.langchain.com/api_reference/community/cross_encoders/langchain_community.cross_encoders.huggingface.HuggingFaceCrossEncoder.html)
 
--**Chains:**
+## Chains:
+
  we can create a chain that takes user input, formats it with a PromptTemplate, and then passes the formatted response to an LLM.
 Leveraged the rlm/rag-promp from LangChain Hub.Constructed a custom RAG chain for better integration with FAISS and cosine similarity,retreivalQA 
 [reference](https://python.langchain.com/docs/versions/migrating_chains/retrieval_qa/)
